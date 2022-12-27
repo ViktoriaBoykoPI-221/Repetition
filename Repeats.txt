@@ -1,0 +1,81 @@
+https://onlinegdb.com/Ps6HZ6xxG
+/********************************************
+ *                                          *
+ * Автор: Бойко Виктория.                   *
+ * Дата: 18.10.22.                          *
+ * Название: Частота повторений.            *
+ *                                          *
+ ********************************************/
+ 
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main() {
+  int maxNumber = 250; 
+  int oneLetterArray[maxNumber];
+  fstream oneLetter;
+  char letter;
+	
+  oneLetter.open("sadStory.txt");
+  if(!oneLetter) {
+    cout << "файл не найден";
+  }
+	
+  for(int index = 0; index < maxNumber; ++index) {
+    oneLetterArray[index] = 0;
+  }
+  letter = oneLetter.get();
+  while(letter != EOF) {  
+    letter = toupper(letter);  
+    ++oneLetterArray[letter];
+    letter = oneLetter.get();  
+  }
+	
+  cout << "Количество повторений букв: " << endl;
+  for(letter = 'A'; letter <= 'Z'; ++letter) {
+	  if(oneLetterArray[letter] > 1) {
+      cout << letter << ": " << oneLetterArray[letter] - 1 << endl;
+	  }
+	}
+
+  cout << endl;
+
+  int twoLetterArray[maxNumber][maxNumber];
+  fstream twoLetter;
+	
+  twoLetter.open("sadStory.txt");
+  if(!twoLetter) {
+    cout << "файл не найден";
+  }
+	
+  for(int indexOne = 0; indexOne < maxNumber; ++indexOne) {
+	  for(int indexTwo = 0; indexTwo < maxNumber; ++indexTwo) {
+      twoLetterArray[indexOne][indexTwo] = 0;
+	  }
+  }
+	
+  char firstLetter, secondLetter;
+	
+  firstLetter = twoLetter.get();
+  secondLetter = twoLetter.get();
+	
+  while(secondLetter != EOF) {
+    firstLetter = toupper(firstLetter);
+    secondLetter = toupper(secondLetter);
+    ++twoLetterArray[firstLetter][secondLetter];
+    firstLetter = twoLetter.get();
+    secondLetter = twoLetter.get();
+  }
+	
+  cout << "Количество повторений двухбуквенных сочетаний: " << endl;
+  for(firstLetter = 'A'; firstLetter <= 'Z'; ++firstLetter) {
+    for(secondLetter = 'A'; secondLetter <= 'Z'; ++secondLetter) {
+	    if(twoLetterArray[firstLetter][secondLetter]) {
+        cout << firstLetter << secondLetter << ": " << twoLetterArray[firstLetter][secondLetter] << endl;
+	    }
+	  }
+  }
+  return 0;
+} 
